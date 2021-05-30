@@ -10,8 +10,7 @@ api = Api(app)
 tasks = {}
 
 
-@app.route('/tasks/<task_id>', methods=['GET', 'POST', 'DEgit add --all'
-                                                       'LETE'])
+@app.route('/tasks/<task_id>', methods=['GET', 'POST', 'DELETE'])
 def daily_tasks(task_id):
     if request.method == 'POST':
         tasks[task_id] = request.form['data']
