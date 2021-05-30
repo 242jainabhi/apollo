@@ -1,0 +1,1 @@
+consumer service with few APIs exposed
