@@ -9,4 +9,3 @@ print(requests.get("http://127.0.0.1:5001/todo/todo_1").text)
 print(requests.get("http://127.0.0.1:5001/todo/todo_2").text)
 requests.put("http://127.0.0.1:5001/todo/todo_2", data={"data": "Remember milk"})
 print(requests.get("http://127.0.0.1:5001/todo/todo_2").text)
-
