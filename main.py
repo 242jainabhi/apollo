@@ -1,33 +1,19 @@
 # using flask_restful
-from flask import Flask, jsonify, request
-from flask_restful import Resource, Api
+from flask import Flask
+from flask_restful import Api
+from resources import daily_tasks, health_check
 
-# creating the flask app
 app = Flask(__name__)
-# creating an API object
 api = Api(app)
 
-tasks = {}
+
+@app.route('/')
+def home():
+    return 'Welcome to Apollo'
 
 
-@app.route('/tasks/<task_id>', methods=['GET', 'POST', 'DELETE'])
-def daily_tasks(task_id):
-    if request.method == 'POST':
-        tasks[task_id] = request.form['data']
-        return {task_id: tasks[task_id]}
-    elif request.method == 'DELETE':
-        if task_id in tasks:
-            del tasks[task_id]
-            return "%s has been removed!!!" % task_id
-        else:
-            return "%s is not available to be deleted" % task_id
-    else:
-        if task_id in tasks:
-            return {task_id: tasks[task_id]}
-        else:
-            return "%s is not available." % task_id
+api.add_resource(health_check.Health, '/health')
+api.add_resource(daily_tasks.DailyTasks, '/tasks/<task_id>')
 
-
-# driver function
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(host='0.0.0.0', port=8080)

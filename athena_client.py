@@ -1,34 +1,29 @@
 import requests
-
-
-class GreetAPI:
-    def get_request(self, name):
-        try:
-            response = requests.get("http://127.0.0.1:5001/greet/%s" % name)
-        except:
-            raise Exception('')
-        return response
+import config
 
 
 class HelloAPI:
     def get_request(self):
-        return requests.get("http://127.0.0.1:5001/")
+        return requests.get("%s:%d/hello" % (config.DOMAIN, config.PORT))
 
     def post_request(self, data):
-        return requests.post("http://127.0.0.1:5001/", data=data)
+        return requests.post("%s/hello" % config.DOMAIN,
+                             data=data)
 
 
 class SquareAPI:
     def get_square(self, num):
-        return requests.get("http://127.0.0.1:5001/square/8")
+        return requests.get("%s:%d/square/%d" % (config.DOMAIN, config.PORT, num))
 
 
 class TodoAPI:
+    url = "%s:%d/" % (config.DOMAIN, config.PORT)
+
     def get_task(self, task_id):
-        return requests.get("http://127.0.0.1:5001/todo/%s" % task_id)
+        return requests.get(TodoAPI.url + 'todo/' + task_id)
 
     def put_task(self, task_id, task):
-        return requests.put("http://127.0.0.1:5001/todo/%s" % task_id, data={"data": task})
+        return requests.put(TodoAPI.url + 'todo/' + task_id, data={"data": task})
 
     def delete_task(self, task_id):
-        response = requests.delete("http://127.0.0.1:5001/tasks/%s" % task_id)
+        response = requests.delete(TodoAPI.url + 'todo/' + task_id)
